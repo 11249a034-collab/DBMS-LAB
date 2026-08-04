@@ -1,0 +1,184 @@
+SQL> desc employee
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPID                                              NUMBER(10)
+ EMPNAME                                            VARCHAR2(250)
+ GENDER                                             CHAR(1)
+ DOB                                                DATE
+
+SQL> create table course(
+  2  course id,
+  3  coursename;
+coursename
+         *
+ERROR at line 3:
+ORA-00907: missing right parenthesis 
+
+
+SQL> drop table course
+  2  course id,
+  3  coursename;
+course id,
+*
+ERROR at line 2:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> create table course1(
+  2  courseid number(6),
+  3  coursename varchar2(20),
+  4  coursefaculty varchar(10));
+
+Table created.
+
+SQL> desc course1
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSEID                                           NUMBER(6)
+ COURSENAME                                         VARCHAR2(20)
+ COURSEFACULTY                                      VARCHAR2(10)
+
+SQL> drop table course1;
+
+Table dropped.
+
+SQL> create table course1(
+  2  courseid number(6) Primary key,
+  3  coursename varchar(10),
+  4  coursefaculty varchar2(20));
+
+Table created.
+
+SQL> desc course1
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSEID                                  NOT NULL NUMBER(6)
+ COURSENAME                                         VARCHAR2(10)
+ COURSEFACULTY                                      VARCHAR2(20)
+
+SQL> create table student34(
+  2  stuid number(6) Primary key,
+  3  stuname varchar2(20) Not null,
+  4  courseid Number Not null Reference course1(courseid),
+  5  email varcahr(30) Not null unique,
+  6  age number check (age>18),
+  7  gender char default 'F');
+courseid Number Not null Reference course1(courseid),
+                         *
+ERROR at line 4:
+ORA-00907: missing right parenthesis 
+
+
+SQL> create table student34(
+  2  stuid number(6) Primary key,
+  3  stuname varchar2(20) Not null,
+  4  courseid Number Not null References course1(courseid),
+  5  email varcahr(30) Not null unique,
+  6  age number check (age>18),
+  7  gender char default 'F');
+email varcahr(30) Not null unique,
+             *
+ERROR at line 5:
+ORA-00907: missing right parenthesis 
+
+
+SQL> create table student34(
+  2  stuid number(6) Primary key,
+  3  stuname varchar2(20) Not null,
+  4  courseid Number Not null References course1(courseid),
+  5  email varchar(30) Not null unique,
+  6  age number check (age>18),
+  7  gender char default 'F');
+
+Table created.
+
+SQL> desc
+Usage: DESCRIBE [schema.]object[@db_link]
+SQL> desc student34
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUID                                     NOT NULL NUMBER(6)
+ STUNAME                                   NOT NULL VARCHAR2(20)
+ COURSEID                                  NOT NULL NUMBER
+ EMAIL                                     NOT NULL VARCHAR2(30)
+ AGE                                                NUMBER
+ GENDER                                             CHAR(1)
+
+SQL> desc student34
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUID                                     NOT NULL NUMBER(6)
+ STUNAME                                   NOT NULL VARCHAR2(20)
+ COURSEID                                  NOT NULL NUMBER
+ EMAIL                                     NOT NULL VARCHAR2(30)
+ AGE                                                NUMBER
+ GENDER                                             CHAR(1)
+
+SQL> 
+SQL> insert into course1 values(28,'cse','balu sir');
+
+1 row created.
+
+SQL> insert into course1 values(35,'ece','malathi mam');
+
+1 row created.
+
+SQL> insert into course1 values(42,'mech','dt sir');
+
+1 row created.
+
+SQL> select * from course1;
+
+  COURSEID COURSENAME COURSEFACULTY                                             
+---------- ---------- --------------------                                      
+        28 cse        balu sir                                                  
+        35 ece        malathi mam                                               
+        42 mech       dt sir                                                    
+
+SQL> desc student34
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUID                                     NOT NULL NUMBER(6)
+ STUNAME                                   NOT NULL VARCHAR2(20)
+ COURSEID                                  NOT NULL NUMBER
+ EMAIL                                     NOT NULL VARCHAR2(30)
+ AGE                                                NUMBER
+ GENDER                                             CHAR(1)
+
+SQL> insert into student34 values(34,'belagalla dhanya sree','42','11249a034@kachiuniv.ac.in',19,'f');
+insert into student34 values(34,'belagalla dhanya sree','42','11249a034@kachiuniv.ac.in',19,'f')
+                                *
+ERROR at line 1:
+ORA-12899: value too large for column "A034"."STUDENT34"."STUNAME" (actual: 21, 
+maximum: 20) 
+
+
+SQL> insert into student34 values(34,'dhanya sree','42','11249a034@kachiuniv.ac.in',19,'f');
+
+1 row created.
+
+SQL> insert into student34 values(109,'mokshith reddy','35','username@gmail.com',19,'m');
+
+1 row created.
+
+SQL> insert into student34 values(210,'tarak','28','username123@gmail.com',19,'m');
+
+1 row created.
+
+SQL> select * from student34;
+
+     STUID STUNAME                COURSEID EMAIL                                
+---------- -------------------- ---------- ------------------------------       
+       AGE G                                                                    
+---------- -                                                                    
+        34 dhanya sree                  42 11249a034@kachiuniv.ac.in            
+        19 f                                                                    
+                                                                                
+       109 mokshith reddy               35 username@gmail.com                   
+        19 m                                                                    
+                                                                                
+       210 tarak                        28 username123@gmail.com                
+        19 m                                                                    
+                                                                                
+
+SQL> spool off
