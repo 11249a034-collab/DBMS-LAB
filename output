@@ -1,0 +1,27 @@
+SELECT STUID,STUNAME FROM STUDENT34;
+
+     STUID STUNAME
+---------- --------------------
+        34 dhanya sree
+       109 mokshith reddy
+       210 tarak
+
+SQL> SELECT * FROM STUDENT34 WHERE STUNAME LIKE '%Y';
+
+no rows selected
+
+SQL> SELECT * FROM STUDENT34 WHERE STUNAME LIKE '%y';
+
+     STUID STUNAME                COURSEID EMAIL
+---------- -------------------- ---------- ------------------------------
+       AGE G
+---------- -
+       109 mokshith reddy               35 username@gmail.com
+        19 m
+
+
+SQL> select count(*) from student34;
+
+  COUNT(*)
+----------
+         3
