@@ -1,0 +1,232 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Tue Aug 11 12:27:28 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: a034@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> create table course
+  2  course_ID number(6),
+  3  course_name varchar(25);
+course_ID number(6),
+*
+ERROR at line 2:
+ORA-00922: missing or invalid option
+
+
+SQL> create table course(
+  2  course_ID number(6),
+  3  course_name varchar(25));
+
+Table created.
+
+SQL> desc
+Usage: DESCRIBE [schema.]object[@db_link]
+SQL> desc course
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSE_ID                                          NUMBER(6)
+ COURSE_NAME                                        VARCHAR2(25)
+
+SQL> create table student(
+  2  name varchar(20),
+  3  reg number(7),
+  4  DOB number(9),
+  5  );
+)
+*
+ERROR at line 5:
+ORA-00904: : invalid identifier
+
+
+SQL> create table student34(
+  2  name varchar(20),
+  3  reg number(10),
+  4  age number(4),
+  5  gender varchar(2),
+  6  email varchar(40));
+create table student34(
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> create table student109(
+  2  name varchar(20),
+  3  reg number(10),
+  4  age number(4),
+  5  gender varchar(2),
+  6  email varchar(40));
+
+Table created.
+
+SQL> desc student109
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                               VARCHAR2(20)
+ REG                                                NUMBER(10)
+ AGE                                                NUMBER(4)
+ GENDER                                             VARCHAR2(2)
+ EMAIL                                              VARCHAR2(40)
+
+SQL> alter table course  add constraint course_id primary key(course_id);
+
+Table altered.
+
+SQL> desc course
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSE_ID                                 NOT NULL NUMBER(6)
+ COURSE_NAME                                        VARCHAR2(25)
+
+SQL> alter student109 add constraint reg unique(reg);
+alter student109 add constraint reg unique(reg)
+      *
+ERROR at line 1:
+ORA-00940: invalid ALTER command
+
+
+SQL> alter table student109 add constraint reg unique(reg);
+
+Table altered.
+
+SQL> alter table student109 add constraint name primary key(name);
+
+Table altered.
+
+SQL> alter table student109 add constraint email unique (email);
+
+Table altered.
+
+SQL> desc student109
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                      NOT NULL VARCHAR2(20)
+ REG                                                NUMBER(10)
+ AGE                                                NUMBER(4)
+ GENDER                                             VARCHAR2(2)
+ EMAIL                                              VARCHAR2(40)
+
+SQL>  alter table student109 add constraint reg unique(reg);
+ alter table student109 add constraint reg unique(reg)
+                                           *
+ERROR at line 1:
+ORA-02261: such unique or primary key already exists in the table
+
+
+SQL>  alter table student109 add constraint gender defualt(gender);
+ alter table student109 add constraint gender defualt(gender)
+                                                     *
+ERROR at line 1:
+ORA-00902: invalid datatype
+
+
+SQL>  alter table student109 add constraint age defualt(age>18);
+ alter table student109 add constraint age defualt(age>18)
+                                                  *
+ERROR at line 1:
+ORA-00902: invalid datatype
+
+
+SQL>  alter table student109 add constraint gender defualt(m);
+ alter table student109 add constraint gender defualt(m)
+                                                     *
+ERROR at line 1:
+ORA-00902: invalid datatype
+
+
+SQL> alter table student109 modify gender default 'm';
+
+Table altered.
+
+SQL> desc student109
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                      NOT NULL VARCHAR2(20)
+ REG                                                NUMBER(10)
+ AGE                                                NUMBER(4)
+ GENDER                                             VARCHAR2(2)
+ EMAIL                                              VARCHAR2(40)
+
+SQL> insert into student109 values('dhanya',a034,18,'f','user@gmail.com');
+insert into student109 values('dhanya',a034,18,'f','user@gmail.com')
+                                       *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into student109 values('dhanya','a034','18','f','user@gmail.com');
+insert into student109 values('dhanya','a034','18','f','user@gmail.com')
+                                       *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> insert into student109 values('dhanya','34','18','f','user@gmail.com');
+
+1 row created.
+
+SQL> insert into student109 values('swetha','35','19','f','user@123gmail.com');
+
+1 row created.
+
+SQL> insert into student109 values('mokshith','356','19','m','user@123gmail.com');
+insert into student109 values('mokshith','356','19','m','user@123gmail.com')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (A034.EMAIL) violated
+
+
+SQL> insert into student109 values('mokshith','356','19','m','user@1234gmail.com');
+
+1 row created.
+
+SQL> desc student109
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                      NOT NULL VARCHAR2(20)
+ REG                                                NUMBER(10)
+ AGE                                                NUMBER(4)
+ GENDER                                             VARCHAR2(2)
+ EMAIL                                              VARCHAR2(40)
+
+SQL> select * from student109
+  2  ;
+
+NAME                        REG        AGE GE
+-------------------- ---------- ---------- --
+EMAIL
+----------------------------------------
+dhanya                       34         18 f
+user@gmail.com
+
+swetha                       35         19 f
+user@123gmail.com
+
+mokshith                    356         19 m
+user@1234gmail.com
+
+
+SQL> alter table student109 add constraint age check(age>18);
+alter table student109 add constraint age check(age>18)
+                                      *
+ERROR at line 1:
+ORA-02293: cannot validate (A034.AGE) - check constraint violated
+
+
+SQL> alter table student109 add constraint age check(age>20);
+alter table student109 add constraint age check(age>20)
+                                      *
+ERROR at line 1:
+ORA-02293: cannot validate (A034.AGE) - check constraint violated
+
+
+SQL> alter table student109 add constraint age check(age>18);
+alter table student109 add constraint age check(age>18)
+                                      *
+ERROR at line 1:
+ORA-02293: cannot validate (A034.AGE) - check constraint violated
