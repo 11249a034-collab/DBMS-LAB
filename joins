@@ -1,0 +1,422 @@
+
+SQL*Plus: Release 11.2.0.1.0 Production on Tue Aug 18 00:50:48 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: a034@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> desc student109
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                      NOT NULL VARCHAR2(20)
+ REG                                                NUMBER(10)
+ AGE                                                NUMBER(4)
+ GENDER                                             VARCHAR2(2)
+ EMAIL                                              VARCHAR2(40)
+
+SQL> select * from student109
+  2  ;
+
+NAME                        REG        AGE GE
+-------------------- ---------- ---------- --
+EMAIL
+----------------------------------------
+dhanya                       34         18 f
+user@gmail.com
+
+swetha                       35         19 f
+user@123gmail.com
+
+mokshith                    356         19 m
+user@1234gmail.com
+
+
+SQL> select name,reg from student109
+  2  ;
+
+NAME                        REG
+-------------------- ----------
+dhanya                       34
+swetha                       35
+mokshith                    356
+
+SQL> select name,reg,ge "gender" from student109
+  2  ;
+select name,reg,ge "gender" from student109
+                *
+ERROR at line 1:
+ORA-00904: "GE": invalid identifier
+
+
+SQL> select name,reg,age "a" from student109
+  2  ;
+
+NAME                        REG          a
+-------------------- ---------- ----------
+dhanya                       34         18
+swetha                       35         19
+mokshith                    356         19
+
+SQL> select * from student34;
+
+no rows selected
+
+SQL> desc course
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSE_ID                                 NOT NULL NUMBER(6)
+ COURSE_NAME                                        VARCHAR2(25)
+
+SQL> select * from course
+  2  ;
+
+no rows selected
+
+SQL> insert into course values(120,'priya');
+
+1 row created.
+
+SQL> insert into course values(121,'kruthi');
+
+1 row created.
+
+SQL> insert into course values(122,'pragathi');
+
+1 row created.
+
+SQL> insert into course values(123,'prathibha');
+
+1 row created.
+
+SQL> select * from course
+  2  ;
+
+ COURSE_ID COURSE_NAME
+---------- -------------------------
+       120 priya
+       121 kruthi
+       122 pragathi
+       123 prathibha
+
+SQL> select name,reg,age,course_id,course_name from student109,course;
+
+NAME                        REG        AGE  COURSE_ID COURSE_NAME
+-------------------- ---------- ---------- ---------- -------------------------
+dhanya                       34         18        120 priya
+swetha                       35         19        120 priya
+mokshith                    356         19        120 priya
+dhanya                       34         18        121 kruthi
+swetha                       35         19        121 kruthi
+mokshith                    356         19        121 kruthi
+dhanya                       34         18        122 pragathi
+swetha                       35         19        122 pragathi
+mokshith                    356         19        122 pragathi
+dhanya                       34         18        123 prathibha
+swetha                       35         19        123 prathibha
+
+NAME                        REG        AGE  COURSE_ID COURSE_NAME
+-------------------- ---------- ---------- ---------- -------------------------
+mokshith                    356         19        123 prathibha
+
+12 rows selected.
+
+SQL> select name,reg,age,course_name from student109,course;
+
+NAME                        REG        AGE COURSE_NAME
+-------------------- ---------- ---------- -------------------------
+dhanya                       34         18 priya
+swetha                       35         19 priya
+mokshith                    356         19 priya
+dhanya                       34         18 kruthi
+swetha                       35         19 kruthi
+mokshith                    356         19 kruthi
+dhanya                       34         18 pragathi
+swetha                       35         19 pragathi
+mokshith                    356         19 pragathi
+dhanya                       34         18 prathibha
+swetha                       35         19 prathibha
+
+NAME                        REG        AGE COURSE_NAME
+-------------------- ---------- ---------- -------------------------
+mokshith                    356         19 prathibha
+
+12 rows selected.
+
+SQL> drop course;
+drop course
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL> drop course;
+drop course
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL> drop table course;
+
+Table dropped.
+
+SQL> create table course;
+create table course
+                  *
+ERROR at line 1:
+ORA-00906: missing left parenthesis
+
+
+SQL> create table course(
+  2  course_id,
+  3  course_name);
+course_id,
+*
+ERROR at line 2:
+ORA-02263: need to specify the datatype for this column
+
+
+SQL> create table course(
+  2  course_id number,
+  3  course_name varchar(20));
+
+Table created.
+
+SQL> insert into course values(001,'CSE');
+
+1 row created.
+
+SQL> insert into course values(002,'ECE');
+
+1 row created.
+
+SQL> insert into course values(003,'MECH');
+
+1 row created.
+
+SQL> insert into course values(004,'EEE');
+
+1 row created.
+
+SQL> SELECT * FROM COURSE
+  2  ;
+
+ COURSE_ID COURSE_NAME
+---------- --------------------
+         1 CSE
+         2 ECE
+         3 MECH
+         4 EEE
+
+SQL> select name,reg,age,course_name from student109,course;
+
+NAME                        REG        AGE COURSE_NAME
+-------------------- ---------- ---------- --------------------
+dhanya                       34         18 CSE
+dhanya                       34         18 ECE
+dhanya                       34         18 MECH
+dhanya                       34         18 EEE
+swetha                       35         19 CSE
+swetha                       35         19 ECE
+swetha                       35         19 MECH
+swetha                       35         19 EEE
+mokshith                    356         19 CSE
+mokshith                    356         19 ECE
+mokshith                    356         19 MECH
+
+NAME                        REG        AGE COURSE_NAME
+-------------------- ---------- ---------- --------------------
+mokshith                    356         19 EEE
+
+12 rows selected.
+
+SQL> SELECT NAME,REG,course.course_id,course_name from student109,course where student.reg=course.course_id;
+SELECT NAME,REG,course.course_id,course_name from student109,course where student.reg=course.course_id
+                                                                          *
+ERROR at line 1:
+ORA-00904: "STUDENT"."REG": invalid identifier
+
+
+SQL> drop table course;
+
+Table dropped.
+
+SQL> create table course(
+  2  course_id number,
+  3  course_name varchar(20));
+
+Table created.
+
+SQL> drop table course;
+
+Table dropped.
+
+SQL> create table course(
+  2  course_id number primary key,
+  3  course_name varchar(20));
+
+Table created.
+
+SQL> insert into course values(34,'cse')
+  2  ;
+
+1 row created.
+
+SQL> insert into course values(35,'EEE');
+
+1 row created.
+
+SQL> insert into course values(356,'ECE');
+
+1 row created.
+
+SQL> SELECT NAME,REG,course.course_id,course_name from student109,course where student.reg=course.course_id;
+SELECT NAME,REG,course.course_id,course_name from student109,course where student.reg=course.course_id
+                                                                          *
+ERROR at line 1:
+ORA-00904: "STUDENT"."REG": invalid identifier
+
+
+SQL> select name,reg,course.course_id,course_name from student109,course where student.reg=course.course_id;
+select name,reg,course.course_id,course_name from student109,course where student.reg=course.course_id
+                                                                          *
+ERROR at line 1:
+ORA-00904: "STUDENT"."REG": invalid identifier
+
+
+SQL> select name,reg,course.course_id,course_name from student109,course where student.reg=course.course_id;
+select name,reg,course.course_id,course_name from student109,course where student.reg=course.course_id
+                                                                          *
+ERROR at line 1:
+ORA-00904: "STUDENT"."REG": invalid identifier
+
+
+SQL> drop table course;
+
+Table dropped.
+
+SQL> create table course(
+  2  course_reg number primary key,
+  3  course_name varchar(20));
+
+Table created.
+
+SQL> insert into course values(34,'cse');
+
+1 row created.
+
+SQL> insert into course values(35,'EEE');
+
+1 row created.
+
+SQL> insert into course values(356,'ECE');
+
+1 row created.
+
+SQL> select name,reg,course.course_reg,course_name from student109,course where student.reg=course.course_reg;
+select name,reg,course.course_reg,course_name from student109,course where student.reg=course.course_reg
+                                                                           *
+ERROR at line 1:
+ORA-00904: "STUDENT"."REG": invalid identifier
+
+
+SQL> select name,reg,course.course_reg,course_name from student109,course where student109.reg=course.course_reg;
+
+NAME                        REG COURSE_REG COURSE_NAME
+-------------------- ---------- ---------- --------------------
+dhanya                       34         34 cse
+swetha                       35         35 EEE
+mokshith                    356        356 ECE
+
+SQL> select a.name,a.reg,b.course_reg,b.course_name from student109 a,course b where a.reg(+)=b.course_reg;
+
+NAME                        REG COURSE_REG COURSE_NAME
+-------------------- ---------- ---------- --------------------
+dhanya                       34         34 cse
+swetha                       35         35 EEE
+mokshith                    356        356 ECE
+
+SQL> select a.name,a.reg,a.gender,b.course_reg,b.course_name from student109 a,course b where a.reg(+)=b.course_reg;
+
+NAME                        REG GE COURSE_REG COURSE_NAME
+-------------------- ---------- -- ---------- --------------------
+dhanya                       34 f          34 cse
+swetha                       35 f          35 EEE
+mokshith                    356 m         356 ECE
+
+SQL> SELECT
+  2      s.student_id,
+  3      s.name       AS student_name,
+  4      m.name       AS mentor_name
+  5  FROM student s
+  6  JOIN student m ON s.mentor_id = m.student_id;
+JOIN student m ON s.mentor_id = m.student_id
+     *
+ERROR at line 6:
+ORA-00942: table or view does not exist
+
+
+SQL> SELECT
+  2      s1.NAME AS STUDENT1,
+  3      s2.NAME AS STUDENT2,
+  4      s1.COURSE_NAME
+  5  FROM student s1
+  6  JOIN student s2
+  7      ON s1.COURSE_NAME = s2.COURSE_NAME
+  8     AND s1.REG < s2.REG;
+JOIN student s2
+     *
+ERROR at line 6:
+ORA-00942: table or view does not exist
+
+
+SQL> SELECT
+  2      s1.NAME AS NAME1,
+  3      s1.REG AS REG1,
+  4      s1.COURSE_NAME AS COURSE1,
+  5      s2.NAME AS NAME2,
+  6      s2.REG AS REG2,
+  7      s2.COURSE_NAME AS COURSE2
+  8  FROM student s1
+  9  JOIN student s2
+ 10      ON s1.REG <> s2.REG;
+JOIN student s2
+     *
+ERROR at line 9:
+ORA-00942: table or view does not exist
+
+
+SQL> SELECT
+  2      s1.NAME AS NAME1,
+  3      s1.REG AS REG1,
+  4      s1.COURSE_NAME AS COURSE1,
+  5      s2.NAME AS NAME2,
+  6      s2.REG AS REG2,
+  7      s2.COURSE_NAME AS COURSE2
+  8  FROM student109 s1
+  9  JOIN student109 s2
+ 10      ON s1.REG <> s2.REG;
+    s2.COURSE_NAME AS COURSE2
+    *
+ERROR at line 7:
+ORA-00904: "S2"."COURSE_NAME": invalid identifier
+
+
+SQL> SELECT
+  2      s1.NAME AS NAME1,
+  3      s1.REG AS REG1,
+  4      s1.COURSE_NAME AS COURSE1,
+  5      s2.NAME AS NAME2,
+  6      s2.REG AS REG2,
+  7      s2.COURSE_NAME AS COURSE2,
+  8  FROM student109 s1
+  9  JOIN student109 s2
+ 10      ON s1.REG <> s2.REG;
+FROM student109 s1
+*
+ERROR at line 8:
+ORA-00936: missing expression
